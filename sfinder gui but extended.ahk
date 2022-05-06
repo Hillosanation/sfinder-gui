@@ -30,11 +30,11 @@ Gui, Add, GroupBox, x10 y40 w300 h170, Inputs
 	Gui, Add, CheckBox, hwndHoldBool vVarHoldBool xp-230 yp+30 Checked, Hold
 
 Gui, Add, GroupBox, x320 y40 w260 h170, Output
-	Gui, Add, Text, xp+10 yp+20, Log Path:
+	Gui, Add, CheckBox, hwndTLP vVarLogPathBool xp+10 yp+20 gLogPathLock, Log Path:
 	Gui, Add, Edit, xp+80 yp-5 w100 h20 hwndLogPath vVarLogPath -Wrap -Multi, %A_ScriptDir%\output\last_output.txt
-	Gui, Add, Button, xp+110 yp gSelectLogFileFunc -Wrap -Multi, Browse
+	Gui, Add, Button, xp+110 yp hwndSelectLogPathFile gSelectLogFileFunc -Wrap -Multi, Browse
 	
-	Gui, Add, Text, xp-190 yp+30, Output base:
+	Gui, Add, CheckBox, hwndTOB vVarOutputBaseBool xp-190 yp+30 gOutputBaseLock, Output base:
 	Gui, Add, Edit, xp+80 yp-5 w100 h20 hwndOutputBasePath vVarOutputBasePath -Wrap -Multi, %A_ScriptDir%\output\path.txt
 	Gui, Add, Button, xp+110 yp hwndSelectOutputBaseFile gSelectOutputBaseFileFunc -Wrap -Multi, Browse
 	
@@ -211,26 +211,40 @@ return
 SubmitCommand:
 	Gui, Submit, NoHide
 	SubmitString := "java -jar sfinder.jar"
+	
+	;common inputs - mostly the same for all commands
+	CommonSettings := ""
+	if (VarChooseCommand != 5) {
+		CommonSettings .= " -H" . (VarHoldBool ? " use" : " avoid")
+	}
+	SimilarStrings .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
+	if (VarChooseCommand != 6) {
+		CommonSettings .= " -P " . VarPage
+	}
+	CommonSettings .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+	
+	if (VarChooseCommand != 1 and VarOutputBaseBool) {
+		CommonSettings .= " -o """ . VarOutputBasePath . """"
+	}
+	if (VarLogPathBool) {
+		CommonSettings .= " -lp """ . VarLogPath . """"
+	}
+	
+	;respective settings - all taken from different inputs
 	if (VarChooseCommand = 1) {
 		SubmitString .= " percent"
-		SubmitString .= " -H" . (VarHoldBool ? " use" : " avoid")
-		SubmitString .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
-		SubmitString .= " -P " . VarPage
-		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+		
+		SubmitString .= CommonSettings
 		
 		SubmitString .= " -c " . Var1ClearLines
 		SubmitString .= " -d " . Var1Drop
 		SubmitString .= " -th " . Var1Threads
 		SubmitString .= " -td " . Var1TreeDepth
 		SubmitString .= " -fc " . Var1FailedCount
-		
-		SubmitString .= " -lp """ . VarLogPath . """"
 	} else if (VarChooseCommand = 2) {
 		SubmitString .= " path"
-		SubmitString .= " -H" . (VarHoldBool ? " use" : " avoid")
-		SubmitString .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
-		SubmitString .= " -P " . VarPage
-		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+		
+		SubmitString .= CommonSettings
 		
 		SubmitString .= " -c " . Var2ClearLines
 		SubmitString .= " -f " . Var2Format . (Var2Format="html" ? "" : " -k " . Var2Key)
@@ -241,15 +255,10 @@ SubmitCommand:
 		SubmitString .= " -d " . Var2Drop
 		SubmitString .= " -th " . Var2Threads
 		SubmitString .= " -cb " . Var2CachedBit
-		
-		SubmitString .= " -o """ . VarOutputBasePath . """"
-		SubmitString .= " -lp """ . VarLogPath . """"
 	} else if (VarChooseCommand = 3) {
 		SubmitString .= " setup"
-		SubmitString .= " -H" . (VarHoldBool ? " use" : " avoid")
-		SubmitString .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
-		SubmitString .= " -P " . VarPage
-		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+		
+		SubmitString .= CommonSettings
 		
 		SubmitString .= " -c " . (Var3Combination ? "yes" : "no")
 		SubmitString .= " -f " . Var3Fill
@@ -262,25 +271,16 @@ SubmitCommand:
 		SubmitString .= " -np " . Var3NPieces
 		SubmitString .= " -fo " . Var3Format
 		SubmitString .= " -s " . Var3Split
-		
-		SubmitString .= " -o """ . VarOutputBasePath . """"
-		SubmitString .= " -lp """ . VarLogPath . """"
 	} else if (VarChooseCommand = 4) {
 		SubmitString .= " ren"
-		SubmitString .= " -H" . (VarHoldBool ? " use" : " avoid")
-		SubmitString .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
-		SubmitString .= " -P " . VarPage
-		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+		
+		SubmitString .= CommonSettings
 		
 		SubmitString .= " -d " . Var4Drop
-		
-		SubmitString .= " -o """ . VarOutputBasePath . """"
-		SubmitString .= " -lp """ . VarLogPath . """"
 	} else if (VarChooseCommand = 5) {
 		SubmitString .= " spin"
-		SubmitString .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
-		SubmitString .= " -P " . VarPage
-		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+		
+		SubmitString .= CommonSettings
 		
 		SubmitString .= " -ft " . Var5FillTop
 		SubmitString .= " -fb " . Var5FillBottom
@@ -289,15 +289,10 @@ SubmitCommand:
 		SubmitString .= " -r " . (Var5Roof ? "yes -mr " . Var5MaxRoof : "no")
 		SubmitString .= " -s " . (Var5Split ? "yes" : "no")
 		SubmitString .= " -f " . Var5Filter
-		
-		SubmitString .= " -o """ . VarOutputBasePath . """"
-		SubmitString .= " -lp """ . VarLogPath . """"
 	} else if (VarChooseCommand = 6) {
 		SubmitString .= " cover"
-		SubmitString .= " -H" . (VarHoldBool ? " use" : " avoid")
-		SubmitString .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
-		SubmitString .= "#" . VarPage
-		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
+		
+		SubmitString .= CommonSettings
 		
 		SubmitString .= " -d " . Var6Drop
 		SubmitString .= " -m " . (Var6Mirror ? "yes" : "no")
@@ -307,9 +302,6 @@ SubmitCommand:
 		SubmitString .= " -l " . Var6LastSoftDrop
 		SubmitString .= " -ms " . Var6MaxSoftDrop
 		SubmitString .= " -mc " . Var6MaxClearLine
-		
-		SubmitString .= " -o """ . VarOutputBasePath . """"
-		SubmitString .= " -lp """ . VarLogPath . """"
 	}
 	Run cmd.exe /c %SubmitString%
 return
@@ -342,6 +334,7 @@ UpdateCommand:
 	GoSub, RoofLock
 	GoSub, OutputBaseLock
 	GoSub, HoldLock
+	GoSub, LogPathLock
 return
 
 FumenPathLock:
@@ -366,11 +359,17 @@ PatternPathLock:
 	LockerFunction(false or !VarPatternPathBool, SelectPatternFile)
 return
 
+LogPathLock:
+	Gui, Submit, NoHide
+	LockerFunction(!VarLogPathBool, LogPath)
+	LockerFunction(!VarLogPathBool, SelectLogPathFile)
+return
+
 OutputBaseLock:
 	Gui, Submit, NoHide
-	bool := (VarChooseCommand = 1)
-	LockerFunction(bool, OutputBasePath)
-	LockerFunction(bool, SelectOutputBaseFile)
+	bool1 := (VarChooseCommand = 1)
+	LockerFunction(bool1 or !VarOutputBaseBool, OutputBasePath)
+	LockerFunction(bool1 or !VarOutputBaseBool, SelectOutputBaseFile)
 return
 
 FormatLock:
