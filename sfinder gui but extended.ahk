@@ -91,9 +91,11 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndPath, path
 	Gui, Add, DropDownList, xp+120 yp-5 hwnd2MaxLayer vVar2MaxLayer w70, 1|2||
 	
 	Gui, Add, CheckBox, xp-120 yp+30 hwnd2SpecifiedOnly vVar2SpecifiedOnly, Specified only
-	Gui, Add, CheckBox, yp+20 hwnd2CachedBit vVar2CachedBit, Cached bit
+	
+	Gui, Add, Text, yp+25 hwnd2Tcb, Cached bit:
+	Gui, Add, Edit, xp+120 yp-5 w40 h20 hwnd2CachedBit vVar2CachedBit -Wrap -Multi, 0
 
-PathGroup := [Path, 2Tc1, 2ClearLines, 2Td, 2Drop, 2Tt, 2Threads, ReservedBool, 2Tf, 2Format, 2TKey, 2Key, 2Split, 2Tml, 2MaxLayer, 2MaxLayer, 2SpecifiedOnly, 2CachedBit]
+PathGroup := [Path, 2Tc1, 2ClearLines, 2Td, 2Drop, 2Tt, 2Threads, ReservedBool, 2Tf, 2Format, 2TKey, 2Key, 2Split, 2Tml, 2MaxLayer, 2MaxLayer, 2SpecifiedOnly, 2Tcb, 2CachedBit]
 ;GuiControlHideAll(PathGroup*)
 
 Gui, Add, GroupBox, x10 y220 w570 h170 hwndSetup, setup
@@ -230,7 +232,7 @@ SubmitCommand:
 		SubmitString .= " -P " . VarPage
 		SubmitString .= (!VarPatternPathBool ? " -p " . VarPattern : " -pp """ . VarPatternPath . """")
 		
-		SubmitString .= " -c " . Var1ClearLines
+		SubmitString .= " -c " . Var2ClearLines
 		SubmitString .= " -f " . Var2Format . (Var2Format="html" ? "" : " -k " . Var2Key)
 		SubmitString .= " -s " . (Var2Split ? "yes" : "no")
 		SubmitString .= " -L " . Var2MaxLayer
@@ -426,3 +428,5 @@ GuiControlShowAll(controls*) {
 
 
 ^Esc:: ExitApp
+GuiClose: 
+ExitApp
