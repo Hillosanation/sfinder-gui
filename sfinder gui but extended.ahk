@@ -45,7 +45,8 @@ Gui, Add, GroupBox, x320 y40 w260 h170, Output
 	Gui, Add, Button, xp+60 yp gExplorerCommand h50 w50 -Wrap -Multi, Explorer
 	
 	Gui, Add, Button, xp+60 yp gFumenCommand h50 w50 -Wrap -Multi, Fumen
-
+	
+	Gui, Add, Edit, xp-180 yp+60 hwndOutputCommandDisplay vVarOutputCommandDisplay
 
 
 Gui, Add, GroupBox, x10 y220 w570 h170 hwndPercent, percent
@@ -217,7 +218,7 @@ SubmitCommand:
 	if (VarChooseCommand != 5) {
 		CommonSettings .= " -H" . (VarHoldBool ? " use" : " avoid")
 	}
-	SimilarStrings .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
+	CommonSettings .= (!VarFumenPathBool ? " -t " . VarFumen : " -fp """ . VarFumenPath . """" )
 	if (VarChooseCommand != 6) {
 		CommonSettings .= " -P " . VarPage
 	}
@@ -270,7 +271,7 @@ SubmitCommand:
 		SubmitString .= " -op " . Var3Operate
 		SubmitString .= " -np " . Var3NPieces
 		SubmitString .= " -fo " . Var3Format
-		SubmitString .= " -s " . Var3Split
+		SubmitString .= " -s " . (Var3Split ? "yes" : "no")
 	} else if (VarChooseCommand = 4) {
 		SubmitString .= " ren"
 		
@@ -303,7 +304,9 @@ SubmitCommand:
 		SubmitString .= " -ms " . Var6MaxSoftDrop
 		SubmitString .= " -mc " . Var6MaxClearLine
 	}
+	GuiControl,, %OutputCommandDisplay%, %SubmitString%
 	Run cmd.exe /c %SubmitString%
+	;MsgBox, %SubmitString% ;testing
 return
 
 LogfileCommand:
