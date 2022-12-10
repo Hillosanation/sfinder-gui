@@ -1,3 +1,6 @@
 GUI is written in AHK, use an IDE like SciTE to compile and run the script
-I will probably put out a released version of the conpiled AHK file soon though
 Put the file in the folder where sfinder is in to use it
+
+Limitation:
+setup:
+  - "--fill", "--margin", "--free": You are able to select multiple types of colors for each option in solution-finder (as of 1.30), but are limited to only one in the GUI.
