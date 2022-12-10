@@ -100,22 +100,50 @@ PathGroup := [Path, 2Tc1, 2ClearLines, 2Td, 2Drop, 2Tt, 2Threads, ReservedBool, 
 ;GuiControlHideAll(PathGroup*)
 
 Gui, Add, GroupBox, x10 y220 w570 h170 hwndSetup, setup
-	Gui, Add, Text, xp+10 yp+20 hwnd3Td, Drop:
-	Gui, Add, DropDownList, xp+120 yp-5 hwnd3Drop vVar3Drop w70, softdrop||harddrop|180|t-softdrop
+	SetupAlign1 := 20
+	SetupAlign2 := 140
+	Gui, Add, Text, x%SetupAlign1% yp+20 hwnd3Td, Drop:
+	Gui, Add, DropDownList, x%SetupAlign2% yp-5 hwnd3Drop vVar3Drop w70, softdrop||harddrop|180|t-softdrop
 
-	Gui, Add, CheckBox, xp-120 yp+30 hwnd3Combination vVar3Combination, Combination
+	Gui, Add, CheckBox, x%SetupAlign1% yp+30 hwnd3Combination vVar3Combination, Combination
 
-	Gui, Add, Text, yp+25 hwnd3Tfill, Fill:
-	Gui, Add, DropDownList, xp+120 yp-5 hwnd3Fill vVar3Fill w70, I|J|L|O|S|Z|T|none||
+	Gui, Add, Text, x%SetupAlign2% yp+15 w12 Center hwnd3TpiecenamesI, I
+	Gui, Add, Text, xp+24                w12 Center hwnd3TpiecenamesJ, J
+	Gui, Add, Text, xp+24                w12 Center hwnd3TpiecenamesL, L
+	Gui, Add, Text, xp+24                w12 Center hwnd3TpiecenamesO, O
+	Gui, Add, Text, xp+24                w12 Center hwnd3TpiecenamesS, S
+	Gui, Add, Text, xp+24                w12 Center hwnd3TpiecenamesZ, Z
+	Gui, Add, Text, xp+24                w12 Center hwnd3TpiecenamesT, T
 
-	Gui, Add, Text, xp-120 yp+30 hwnd3Tm, Margin:
-	Gui, Add, DropDownList, xp+120 yp-5 hwnd3Margin vVar3Margin w70, I|J|L|O|S|Z|T|none||
+	Gui, Add, Text, x%SetupAlign1% yp+15 hwnd3Tfill, Fill:
+	Gui, Add, CheckBox, x%SetupAlign2% yp+0 hwnd3FillI vVar3FillI w24
+	Gui, Add, CheckBox, xp+24               hwnd3FillJ vVar3FillJ w24
+	Gui, Add, CheckBox, xp+24               hwnd3FillL vVar3FillL w24
+	Gui, Add, CheckBox, xp+24               hwnd3FillO vVar3FillO w24
+	Gui, Add, CheckBox, xp+24               hwnd3FillS vVar3FillS w24
+	Gui, Add, CheckBox, xp+24               hwnd3FillZ vVar3FillZ w24
+	Gui, Add, CheckBox, xp+24               hwnd3FillT vVar3FillT w24
 
-	Gui, Add, Text, xp-120 yp+30 hwnd3Tfree, Free:
-	Gui, Add, DropDownList, xp+120 yp-5 hwnd3Free vVar3Free w70, I|J|L|O|S|Z|T|none||
+	Gui, Add, Text, x%SetupAlign1% yp+20 hwnd3Tm, Margin:
+	Gui, Add, CheckBox, x%SetupAlign2% yp+0 hwnd3MarginI vVar3MarginI w24
+	Gui, Add, CheckBox, xp+24               hwnd3MarginJ vVar3MarginJ w24
+	Gui, Add, CheckBox, xp+24               hwnd3MarginL vVar3MarginL w24
+	Gui, Add, CheckBox, xp+24               hwnd3MarginO vVar3MarginO w24
+	Gui, Add, CheckBox, xp+24               hwnd3MarginS vVar3MarginS w24
+	Gui, Add, CheckBox, xp+24               hwnd3MarginZ vVar3MarginZ w24
+	Gui, Add, CheckBox, xp+24               hwnd3MarginT vVar3MarginT w24
 
-	Gui, Add, Text, xp-120 yp+30 hwnd3Tl, Line:
-	Gui, Add, Edit, xp+120 yp-5 w40 h20 hwnd3Line vVar3Line -Wrap -Multi, -1
+	Gui, Add, Text, x%SetupAlign1% yp+20 hwnd3Tfree, Free:
+	Gui, Add, CheckBox, x%SetupAlign2% yp+0 hwnd3FreeI vVar3FreeI w24
+	Gui, Add, CheckBox, xp+24               hwnd3FreeJ vVar3FreeJ w24
+	Gui, Add, CheckBox, xp+24               hwnd3FreeL vVar3FreeL w24
+	Gui, Add, CheckBox, xp+24               hwnd3FreeO vVar3FreeO w24
+	Gui, Add, CheckBox, xp+24               hwnd3FreeS vVar3FreeS w24
+	Gui, Add, CheckBox, xp+24               hwnd3FreeZ vVar3FreeZ w24
+	Gui, Add, CheckBox, xp+24               hwnd3FreeT vVar3FreeT w24
+
+	Gui, Add, Text, x%SetupAlign1% yp+30 hwnd3Tl, Line:
+	Gui, Add, Edit, x%SetupAlign2% yp-5 w40 h20 hwnd3Line vVar3Line -Wrap -Multi, -1
 
 	Gui, Add, Text, xp+190 yp-120 hwnd3Te, Exclude:
 	Gui, Add, DropDownList, xp+120 yp-5 hwnd3Exclude vVar3Exclude w70, holes|strict-holes|none||
@@ -131,7 +159,7 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndSetup, setup
 
 	Gui, Add, CheckBox, xp-120 yp+30 hwnd3Split vVar3Split w70, Split
 
-SetupGroup := [Setup, 3Td, 3Drop, 3Combination, 3Tfill, 3Fill, 3Tm, 3Margin, 3Tfree, 3Free, 3Tl, 3Line, 3Te, 3Exclude, 3To, 3Operate, 3Tn, 3NPieces, 3Tformat, 3Format, 3Split]
+SetupGroup := [Setup, 3Td, 3Drop, 3Combination, 3TpiecenamesI, 3TpiecenamesJ, 3TpiecenamesL, 3TpiecenamesO, 3TpiecenamesS, 3TpiecenamesZ, 3TpiecenamesT, 3Tfill, 3FillI, 3FillJ, 3FillL, 3FillO, 3FillS, 3FillZ, 3FillT, 3Tm, 3MarginI, 3MarginJ, 3MarginL, 3MarginO, 3MarginS, 3MarginZ, 3MarginT, 3Tfree, 3FreeI, 3FreeJ, 3FreeL, 3FreeO, 3FreeS, 3FreeZ, 3FreeT, 3Tl, 3Line, 3Te, 3Exclude, 3To, 3Operate, 3Tn, 3NPieces, 3Tformat, 3Format, 3Split]
 ;GuiControlHideAll(SetupGroup*)
 
 Gui, Add, GroupBox, x10 y220 w570 h170 hwndRen, ren
@@ -265,9 +293,30 @@ SubmitCommand:
 		SubmitString .= CommonSettings
 
 		SubmitString .= " -c " . (Var3Combination ? "yes" : "no")
-		SubmitString .= " -f " . Var3Fill
-		SubmitString .= " -m " . Var3Margin
-		SubmitString .= " -F " . Var3Free
+
+		SelectedTetrominos := ""
+		CorrespondingTetromino := ["I", "J", "L", "O", "S", "Z", "T"]
+		FillChoose := [Var3FillI, Var3FillJ, Var3FillL, Var3FillO, Var3FillS, Var3FillZ, Var3FillT]
+		MarginChoose := [Var3MarginI, Var3MarginJ, Var3MarginL, Var3MarginO, Var3MarginS, Var3MarginZ, Var3MarginT]
+		FreeChoose := [Var3FreeI, Var3FreeJ, Var3FreeL, Var3FreeO, Var3FreeS, Var3FreeZ, Var3FreeT]
+
+
+		For option, optionFlag in {FillChoose: " -f ", MarginChoose: " -m ", FreeChoose: " -F "} {
+			MsgBox, %option%
+			optionString := ""
+			For index, pieceChosen in %option% {
+				if (pieceChosen) {
+					optionString .= CorrespondingTetromino[index]
+				}
+				MsgBox, %optionString%
+			}
+			if (optionString = "") {
+				optionString := "none"
+			}
+
+			SubmitString .= optionFlag . optionString
+		}
+
 		SubmitString .= " -l " . Var3Line
 		SubmitString .= " -d " . Var3Drop
 		SubmitString .= " -e " . Var3Exclude
