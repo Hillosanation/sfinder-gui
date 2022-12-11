@@ -5,31 +5,41 @@ SetTitleMatchMode, 2
 WinActivate, "sfinder gui but extended"
 
 Gui, GUIWindow:New
-Gui, Show, w600 h400
+Gui, Show, w600 h420
 Gui, Add, Text, y10, Command type:
 Gui, Add, DropDownList, vVarChooseCommand AltSubmit w70 x90 yp-4 gUpdateCommand, percent||path|setup|ren|spin|cover
 
-Gui, Add, GroupBox, x10 y40 w300 h170, Inputs
-	Gui, Add, Text, xp+10 yp+20, Fumen:
-	Gui, Add, Edit, xp+120 yp-5 w100 h20 hwndFumen vVarFumen -Wrap -Multi, v115@9gC8EeE8DeF8CeG8DeC8JeAgH
+Gui, Add, GroupBox, x10 y30 w300 h200, Inputs
+	InputAlign1 := 20
+	InputAlign1a := InputAlign1 + 20
+	InputAlign2 := InputAlign1 + 120
+	InputAlign1z := InputAlign1 + 100
+	InputAlign3 := InputAlign2 + 110
+	Gui, Add, Text, x%InputAlign1% yp+20, Fumen:
+	Gui, Add, Edit, x%InputAlign2% yp-5 w100 h20 hwndFumen vVarFumen -Wrap -Multi, v115@9gC8EeE8DeF8CeG8DeC8JeAgH
 
-	Gui, Add, CheckBox, hwndFumenPathBool vVarFumenPathBool xp-100 yp+30 gFumenPathLock, Use fumen path:
-	Gui, Add, Edit, xp+100 yp-3 w100 h20 hwndFumenPath vVarFumenPath -Wrap -Multi, %A_ScriptDir%\input\field.txt
-	Gui, Add, Button, xp+110 yp hwndSelectFumenFile gSelectFumenFileFunc -Wrap -Multi, Browse
+	Gui, Add, CheckBox, x%InputAlign1a% yp+30 hwndFumenPathBool vVarFumenPathBool gFumenPathLock, Use fumen path:
+	Gui, Add, Edit, x%InputAlign2% yp-3 w100 h20 hwndFumenPath vVarFumenPath -Wrap -Multi, %A_ScriptDir%\input\field.txt
+	Gui, Add, Button, x%InputAlign3% yp hwndSelectFumenFile gSelectFumenFileFunc -Wrap -Multi, Browse
 
-	Gui, Add, Text, xp-230 yp+30, Page:
-	Gui, Add, Edit, xp+120 yp-5 w40 hwndPage vVarPage -Wrap -Multi, 1
+	Gui, Add, Text, x%InputAlign1% yp+30, Page:
+	Gui, Add, Edit, x%InputAlign2% yp-5 w40 hwndPage vVarPage -Wrap -Multi, 1
 
-	Gui, Add, Text, xp-120 yp+30, Pattern:
-	Gui, Add, Edit, xp+120 yp-5 w100 hwndPattern vVarPattern -Wrap -Multi, I,[IJLOSTZ]p3,
+	Gui, Add, Text, x%InputAlign1% yp+30, Pattern:
+	Gui, Add, Edit, x%InputAlign2% yp-5 w100 hwndPattern vVarPattern -Wrap -Multi, I,[IJLOSTZ]p3,
 
-	Gui, Add, CheckBox, hwndPatternPathBool vVarPatternPathBool xp-100 yp+30 gPatternPathLock, Use pattern path:
-	Gui, Add, Edit, xp+100 yp-3 w100 h20 hwndPatternPath vVarPatternPath -Wrap -Multi, %A_ScriptDir%\input\patterns.txt
-	Gui, Add, Button, xp+110 yp hwndSelectPatternFile gSelectPatternFileFunc -Wrap -Multi, Browse
+	Gui, Add, CheckBox, x%InputAlign1a% yp+30 hwndPatternPathBool vVarPatternPathBool gPatternPathLock, Use pattern path:
+	Gui, Add, Edit, x%InputAlign2% yp-3 w100 h20 hwndPatternPath vVarPatternPath -Wrap -Multi, %A_ScriptDir%\input\patterns.txt
+	Gui, Add, Button, x%InputAlign3% yp hwndSelectPatternFile gSelectPatternFileFunc -Wrap -Multi, Browse
 
-	Gui, Add, CheckBox, hwndHoldBool vVarHoldBool xp-230 yp+30 Checked, Hold
+	Gui, Add, CheckBox, x%InputAlign1% yp+30 hwndHoldBool vVarHoldBool Checked, Hold
 
-Gui, Add, GroupBox, x320 y40 w260 h170, Output
+	Gui, Add, Text, x%InputAlign1% yp+20 hwndTKick1, Kick:
+	Gui, Add, Text, x%InputAlign1z% yp hwndTKick2, @
+	Gui, Add, Edit, x%InputAlign2% yp-5 w100 hwndKick vVarKick, srs
+	Gui, Add, Button, xp+110 yp -Wrap -Multi hwndSelectKick gSelectKickFunc, Browse
+
+Gui, Add, GroupBox, x320 y30 w260 h200, Output
 	Gui, Add, CheckBox, hwndTLP vVarLogPathBool xp+10 yp+20 gLogPathLock, Log Path:
 	Gui, Add, Edit, xp+80 yp-5 w100 h20 hwndLogPath vVarLogPath -Wrap -Multi, %A_ScriptDir%\output\last_output.txt
 	Gui, Add, Button, xp+110 yp hwndSelectLogPathFile gSelectLogFileFunc -Wrap -Multi, Browse
@@ -49,7 +59,7 @@ Gui, Add, GroupBox, x320 y40 w260 h170, Output
 	Gui, Add, Edit, xp-180 yp+60 hwndOutputCommandDisplay vVarOutputCommandDisplay
 
 
-Gui, Add, GroupBox, x10 y220 w570 h170 hwndPercent, percent
+Gui, Add, GroupBox, x10 y240 w570 h170 hwndPercent, percent
 	Gui, Add, Text, xp+10 yp+20 hwnd1Tc1, Clear Lines:
 	Gui, Add, Edit, xp+120 yp-5 w40 h20 hwnd1ClearLines vVar1ClearLines -Wrap -Multi, 4
 
@@ -68,7 +78,7 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndPercent, percent
 PercentGroup := [Percent, 1Tc1, 1ClearLines, 1Td, 1Drop, 1Tt, 1Threads, 1Ttd, 1TreeDepth, 1Tfc, 1FailedCount]
 ;GuiControlHideAll(PercentGroup*)
 
-Gui, Add, GroupBox, x10 y220 w570 h170 hwndPath, path
+Gui, Add, GroupBox, x10 y240 w570 h170 hwndPath, path
 	Gui, Add, Text, xp+10 yp+20 hwnd2Tc1, Clear Lines:
 	Gui, Add, Edit, xp+120 yp-5 w40 h20 hwnd2ClearLines vVar2ClearLines -Wrap -Multi, 4
 
@@ -99,7 +109,7 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndPath, path
 PathGroup := [Path, 2Tc1, 2ClearLines, 2Td, 2Drop, 2Tt, 2Threads, ReservedBool, 2Tf, 2Format, 2TKey, 2Key, 2Split, 2Tml, 2MaxLayer, 2MaxLayer, 2SpecifiedOnly, 2Tcb, 2CachedBit]
 ;GuiControlHideAll(PathGroup*)
 
-Gui, Add, GroupBox, x10 y220 w570 h170 hwndSetup, setup
+Gui, Add, GroupBox, x10 y240 w570 h170 hwndSetup, setup
 	SetupAlign1 := 20
 	SetupAlign2 := 140
 	Gui, Add, Text, x%SetupAlign1% yp+20 hwnd3Td, Drop:
@@ -162,7 +172,7 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndSetup, setup
 SetupGroup := [Setup, 3Td, 3Drop, 3Combination, 3TpiecenamesI, 3TpiecenamesJ, 3TpiecenamesL, 3TpiecenamesO, 3TpiecenamesS, 3TpiecenamesZ, 3TpiecenamesT, 3Tfill, 3FillI, 3FillJ, 3FillL, 3FillO, 3FillS, 3FillZ, 3FillT, 3Tm, 3MarginI, 3MarginJ, 3MarginL, 3MarginO, 3MarginS, 3MarginZ, 3MarginT, 3Tfree, 3FreeI, 3FreeJ, 3FreeL, 3FreeO, 3FreeS, 3FreeZ, 3FreeT, 3Tl, 3Line, 3Te, 3Exclude, 3To, 3Operate, 3Tn, 3NPieces, 3Tformat, 3Format, 3Split]
 ;GuiControlHideAll(SetupGroup*)
 
-Gui, Add, GroupBox, x10 y220 w570 h170 hwndRen, ren
+Gui, Add, GroupBox, x10 y240 w570 h170 hwndRen, ren
 	Gui, Add, Text, xp+10 yp+20 hwnd4Td, Drop:
 	Gui, Add, DropDownList, xp+120 yp-5 hwnd4Drop vVar4Drop w70, softdrop||harddrop|180|t-softdrop
 
@@ -170,7 +180,7 @@ RenGroup := [Ren, 4Td, 4Drop]
 
 ;GuiControlHideAll(RenGroup*)
 
-Gui, Add, GroupBox, x10 y220 w570 h170 hwndSpin, spin
+Gui, Add, GroupBox, x10 y240 w570 h170 hwndSpin, spin
 	Gui, Add, Text, xp+10 yp+20 hwnd5Tl, Line:
 	Gui, Add, Edit, xp+120 yp-5 w40 h20 hwnd5Line vVar5Line -Wrap -Multi, 2
 
@@ -199,7 +209,7 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndSpin, spin
 SpinGroup := [Spin, 5Tl, 5Line, 5TFt, 5FillTop, 5TFb, 5FillBottom, 5TMh, 5MarginHeight, 5Roof, 5TMr, 5MaxRoof, 5Split, 5Tf, 5Filter, 5Tformat, 5Format]
 ;GuiControlHideAll(SpinGroup*)
 
-Gui, Add, GroupBox, x10 y220 w570 h170 hwndCover, cover
+Gui, Add, GroupBox, x10 y240 w570 h170 hwndCover, cover
 	Gui, Add, Text, xp+10 yp+20 hwnd6Tm, Mode:
 	Gui, Add, DropDownList, xp+120 yp-5 hwnd6Mode vVar6Mode w70, normal||1L|2L|3L|4L|1L-OR-PC|2L-OR-PC|3L-OR-PC|4L-OR-PC|tetris|tetris-end|tsm|tss|tsd|tst
 
@@ -225,27 +235,29 @@ Gui, Add, GroupBox, x10 y220 w570 h170 hwndCover, cover
 CoverGroup := [Cover, 6Tm, 6Mode, 6TSb, 6StartingB2b, 6Td, 6Drop, 6Priority, 6Mirror, 6Tlsd, 6LastSoftDrop, 6Tmsd, 6MaxSoftDrop, 6Tmcl, 6MaxClearLine]
 ;GuiControlHideAll(CoverGroup*)
 
-global IntermediateGroups := [PercentGroup, PathGroup, SetupGroup, RenGroup, SpinGroup, CoverGroup]
+IntermediateGroups := [PercentGroup, PathGroup, SetupGroup, RenGroup, SpinGroup, CoverGroup]
 
 
 
-Gosub, UpdateCommand
+UpdateCommand()
 return
 
 
 ;#--------------------------------------------------------------------------------------------------#
 
-FumenCommand:
+FumenCommand() {
 	Gui, Submit, NoHide
+	global VarFumen
 	Run, https://fumen.zui.jp/?%VarFumen%
-return
+}
 
-SubmitCommand:
+SubmitCommand() {
+	global
 	Gui, Submit, NoHide
-	SubmitString := "java -jar sfinder.jar"
+	local SubmitString := "java -jar sfinder.jar"
 
 	;common inputs - mostly the same for all commands
-	CommonSettings := ""
+	local CommonSettings := ""
 	if (VarChooseCommand != 5) {
 		CommonSettings .= " -H" . (VarHoldBool ? " use" : " avoid")
 	}
@@ -260,6 +272,9 @@ SubmitCommand:
 	}
 	if (VarLogPathBool) {
 		CommonSettings .= " -lp """ . VarLogPath . """"
+	}
+	if (VarChooseCommand != 5) {
+		CommonSettings .= " -K ""@" . VarKick . """"
 	}
 
 	;respective settings - all taken from different inputs
@@ -295,20 +310,19 @@ SubmitCommand:
 		SubmitString .= " -c " . (Var3Combination ? "yes" : "no")
 
 		SelectedTetrominos := ""
-		CorrespondingTetromino := ["I", "J", "L", "O", "S", "Z", "T"]
-		FillChoose := [Var3FillI, Var3FillJ, Var3FillL, Var3FillO, Var3FillS, Var3FillZ, Var3FillT]
-		MarginChoose := [Var3MarginI, Var3MarginJ, Var3MarginL, Var3MarginO, Var3MarginS, Var3MarginZ, Var3MarginT]
-		FreeChoose := [Var3FreeI, Var3FreeJ, Var3FreeL, Var3FreeO, Var3FreeS, Var3FreeZ, Var3FreeT]
-
+		local CorrespondingTetromino := ["I", "J", "L", "O", "S", "Z", "T"]
+		local FillChoose := [Var3FillI, Var3FillJ, Var3FillL, Var3FillO, Var3FillS, Var3FillZ, Var3FillT]
+		local MarginChoose := [Var3MarginI, Var3MarginJ, Var3MarginL, Var3MarginO, Var3MarginS, Var3MarginZ, Var3MarginT]
+		local FreeChoose := [Var3FreeI, Var3FreeJ, Var3FreeL, Var3FreeO, Var3FreeS, Var3FreeZ, Var3FreeT]
 
 		For option, optionFlag in {FillChoose: " -f ", MarginChoose: " -m ", FreeChoose: " -F "} {
-			MsgBox, %option%
+			;MsgBox, %option%
 			optionString := ""
 			For index, pieceChosen in %option% {
 				if (pieceChosen) {
 					optionString .= CorrespondingTetromino[index]
 				}
-				MsgBox, %optionString%
+				;MsgBox, %optionString%
 			}
 			if (optionString = "") {
 				optionString := "none"
@@ -317,13 +331,14 @@ SubmitCommand:
 			SubmitString .= optionFlag . optionString
 		}
 
-		SubmitString .= " -l " . Var3Line
-		SubmitString .= " -d " . Var3Drop
-		SubmitString .= " -e " . Var3Exclude
+
+		SubmitString .= " -l "  . Var3Line
+		SubmitString .= " -d "  . Var3Drop
+		SubmitString .= " -e "  . Var3Exclude
 		SubmitString .= " -op " . Var3Operate
 		SubmitString .= " -np " . Var3NPieces
 		SubmitString .= " -fo " . Var3Format
-		SubmitString .= " -s " . (Var3Split ? "yes" : "no")
+		SubmitString .= " -s "  . (Var3Split ? "yes" : "no")
 	} else if (VarChooseCommand = 4) {
 		SubmitString .= " ren"
 
@@ -360,83 +375,96 @@ SubmitCommand:
 	GuiControl,, %OutputCommandDisplay%, %SubmitString%
 	Run cmd.exe /c %SubmitString%
 	;MsgBox, %SubmitString% ;testing
-return
+}
 
-LogfileCommand:
+LogfileCommand() {
 	Gui, Submit, NoHide
-	ExplorerPath := VarLogPath
-	;MsgBox, %ExplorerPath%
-	Run, explorer %ExplorerPath%
-return
+	global VarLogPath
+	Run, explorer %VarLogPath%
+}
 
-ExplorerCommand:
+ExplorerCommand() {
 	Gui, Submit, NoHide
 	Run, explorer %A_ScriptDir%
-return
+}
 
-UpdateCommand:
+UpdateCommand() {
+	global
 	Gui, Submit, NoHide
 	for group in IntermediateGroups {
 		GuiControlHideAll(IntermediateGroups[group]*)
 	}
 	GuiControlShowAll(IntermediateGroups[VarChooseCommand]*) ;show menu of the one in selection
 
-	;bool := (VarChooseCommand = 6) ;PageLock ;nvm cover still uses pages, just different implementation
-	;LockerFunction(bool, Page)
+	FumenPathLock()
+	PatternPathLock()
+	FormatLock()
+	RoofLock()
+	OutputBaseLock()
+	HoldLock()
+	LogPathLock()
+	KickLock()
+}
 
-	Gosub, FumenPathLock
-	Gosub, PatternPathLock
-	GoSub, FormatLock
-	GoSub, RoofLock
-	GoSub, OutputBaseLock
-	GoSub, HoldLock
-	GoSub, LogPathLock
-return
-
-FumenPathLock:
+FumenPathLock() {
+	global
 	Gui, Submit, NoHide
 	LockerFunction(VarFumenPathBool, Fumen)
 	LockerFunction(!VarFumenPathBool, SelectFumenFile)
 	LockerFunction(!VarFumenPathBool, FumenPath)
-return
+}
 
-HoldLock:
+HoldLock() {
+	global
 	Gui, Submit, NoHide
-	bool := (VarChooseCommand = 5)
+	local bool := (VarChooseCommand = 5)
 	LockerFunction(bool, HoldBool)
-return
+}
 
-PatternPathLock:
+PatternPathLock() {
+	global
 	Gui, Submit, NoHide
-	bool := (VarChooseCommand = 5)
+	local bool := (VarChooseCommand = 5)
 	LockerFunction(false or VarPatternPathBool, Pattern)
 	LockerFunction(false or !VarPatternPathBool, PatternPath)
 	LockerFunction(false, PatternPathBool)
 	LockerFunction(false or !VarPatternPathBool, SelectPatternFile)
-return
+}
 
-LogPathLock:
+LogPathLock() {
+	global
 	Gui, Submit, NoHide
 	LockerFunction(!VarLogPathBool, LogPath)
 	LockerFunction(!VarLogPathBool, SelectLogPathFile)
-return
+}
 
-OutputBaseLock:
+OutputBaseLock() {
+	global
 	Gui, Submit, NoHide
-	bool1 := (VarChooseCommand = 1)
-	LockerFunction(bool1 or !VarOutputBaseBool, OutputBasePath)
-	LockerFunction(bool1 or !VarOutputBaseBool, SelectOutputBaseFile)
-return
+	local bool := (VarChooseCommand = 1)
+	LockerFunction(bool or !VarOutputBaseBool, OutputBasePath)
+	LockerFunction(bool or !VarOutputBaseBool, SelectOutputBaseFile)
+}
 
-FormatLock:
+KickLock() {
+	global
+	Gui, Submit, NoHide
+	local bool := (VarChooseCommand = 5)
+	LockerFunction(bool, Kick)
+	LockerFunction(bool, SelectKick)
+}
+
+FormatLock() {
+	global
 	Gui, Submit, NoHide
 	LockerFunction(Var2Format != "csv", 2Key)
-return
+}
 
-RoofLock:
+RoofLock() {
+	global
 	Gui, Submit, NoHide
 	LockerFunction(!Var5Roof, 5MaxRoof)
-return
+}
 
 LockerFunction(condition, LockTarget) {
 	if (condition) {
@@ -446,25 +474,39 @@ LockerFunction(condition, LockTarget) {
 	}
 }
 
-SelectFumenFileFunc: ;might not work
+SelectFumenFileFunc() {
+	global FumenPath
 	SelectFile(FumenPath)
-return
+}
 
-SelectPatternFileFunc:
+SelectPatternFileFunc() {
+	global PatternPath
 	SelectFile(PatternPath)
-return
+}
 
-SelectLogFileFunc:
+SelectLogFileFunc() {
+	global LogPath
 	SelectFile(LogPath)
-return
+}
 
-SelectOutputBaseFileFunc:
+SelectOutputBaseFileFunc() {
+	global OutputBasePath
 	SelectFile(OutputBasePath)
-return
+}
+
+SelectKickFunc() {
+	global Kick
+	Gui, Submit, NoHide
+	KickDir := A_ScriptDir . "\kicks"
+	FileSelectFile, FilePath, s, %KickDir%,, *.properties
+	RegExMatch(FilePath, "\w+(?=\.properties)", FileName)
+	;MsgBox % FileName
+	GuiControl,, %Kick%, %FileName%
+}
 
 SelectFile(boxID){
 	Gui, Submit, NoHide
-	FileSelectFile, FilePath, s, Filename,, *.txt
+	FileSelectFile, FilePath, s, %A_ScriptDir%,, *.txt
 	GuiControl,, %boxID%, %FilePath%
 }
 
@@ -483,5 +525,6 @@ GuiControlShowAll(controls*) {
 
 
 ^Esc:: ExitApp
-GuiClose:
-ExitApp
+GuiClose() {
+	ExitApp
+}
